@@ -23,9 +23,9 @@ public class Main {
         final File folder = new File(path);
         System.out.println(folder.getName());
 
-        //listFilesForFolderNull(folder);
+        //listFilesForFolder(folder);
         //2 method
-        Thread thread = new Thread(() -> listFilesForFolder(folder));
+        Thread thread = new Thread(() -> listFilesForFolderNull(folder));
         thread.start();
 
         while (thread.isAlive()) {
@@ -56,10 +56,10 @@ public class Main {
     }
 
     public static void listFilesForFolderNull(final File folder) {
-        if (folder != null) {
+        if (folder.listFiles() != null) {
             for (final File fileEntry : Objects.requireNonNull(folder.listFiles())) {
                 if (fileEntry.isDirectory()) {
-                    listFilesForFolder(fileEntry);
+                    listFilesForFolderNull(fileEntry);
                     foldrCount++;
                 } else {
                     fileSize += fileEntry.length();
@@ -68,5 +68,4 @@ public class Main {
             }
         }
     }
-
 }
