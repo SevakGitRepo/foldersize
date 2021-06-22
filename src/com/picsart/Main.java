@@ -25,11 +25,13 @@ public class Main {
 
         //listFilesForFolder(folder);
         //2 method
-        Thread thread = new Thread(() -> listFilesForFolderNull(folder));
+        Thread thread = new Thread(() -> { listFilesForFolderNull(folder);
+        });
         thread.start();
 
         while (thread.isAlive()) {
-            TimeUnit.MILLISECONDS.sleep(500);
+            TimeUnit.MILLISECONDS.sleep(2000);
+            System.out.println("-------INFO-------");
             System.out.println("File count  = " + fileCount);
             System.out.println("Folder count = " + foldrCount);
             System.out.println("Folder size = " + fileSize / 1_000_000 + " MB");
@@ -37,6 +39,7 @@ public class Main {
         }
 
         System.out.println("End");
+
     }
 
     public static void listFilesForFolder(final File folder) {
@@ -46,10 +49,16 @@ public class Main {
                     listFilesForFolder(fileEntry);
                     foldrCount++;
                 } else {
-//                System.out.println(fileEntry.getName());
+
                     fileSize += fileEntry.length();
                     fileCount++;
                 }
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("File name "+fileEntry.getName());
             }
         } catch (Exception ignored) {
         }
@@ -65,6 +74,12 @@ public class Main {
                     fileSize += fileEntry.length();
                     fileCount++;
                 }
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("File name "+fileEntry.getName());
             }
         }
     }
